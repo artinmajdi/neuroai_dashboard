@@ -1,5 +1,6 @@
 # NeuroAI Dashboard Dependencies
 streamlit>=1.22.0
+streamlit-elements>=0.1.0  # For interactive UI elements and MUI integration
 numpy>=1.22.0
 pandas>=1.4.0
 matplotlib>=3.5.0

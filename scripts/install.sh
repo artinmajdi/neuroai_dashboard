@@ -354,6 +354,22 @@ echo -e "${GREEN}Using Python $PYTHON_VERSION${NC}"
 # Install dependencies
 install_dependencies
 
+# Install React slides frontend dependencies
+if [ -d "$PROJECT_ROOT/react-slides" ]; then
+    echo -e "${BLUE}Installing React frontend dependencies...${NC}"
+    cd "$PROJECT_ROOT/react-slides"
+    if command_exists npm; then
+        npm install
+        # Install Tailwind v4 PostCSS plugin for compatibility
+        npm install --save-dev @tailwindcss/postcss
+        # Patch postcss.config.js for Tailwind v4
+        echo "module.exports = {\n  plugins: {\n    '@tailwindcss/postcss': {},\n    autoprefixer: {},\n  },\n};\n" > postcss.config.js
+    else
+        echo -e "${RED}Error: npm (Node.js) is not installed. Please install Node.js and npm to use the React slide decks frontend.\nVisit https://nodejs.org/en/download for installation instructions.${NC}"
+    fi
+    cd "$PROJECT_ROOT"
+fi
+
 # Add activation instructions based on user selection
 if [ "$ENV_TYPE" = "venv" ]; then
     echo -e "\n ${BLUE}To activate the virtual environment, run:\n\n    source .venv/bin/activate\n${NC}"
@@ -383,5 +399,7 @@ echo ""
 echo -e "${GREEN}===========================================================${NC}"
 echo -e "${GREEN}        Installation completed successfully!               ${NC}"
 echo -e "${GREEN}===========================================================${NC}"
+
+echo ""
 
 exit 0

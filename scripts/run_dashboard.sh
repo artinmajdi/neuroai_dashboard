@@ -67,18 +67,36 @@ case $choice in
             APP_PATH="$custom_path"
         fi
 
-        # Check if streamlit is installed
-        if command -v streamlit &> /dev/null; then
-            # Run with Streamlit if it's installed
+        # Start React frontend (in background)
+        if [ -d "$ROOT_DIR/react-slides" ]; then
+            echo -e "${GREEN}Starting React frontend (slide decks)...${NC}"
+            cd "$ROOT_DIR/react-slides"
+            if command -v npm &> /dev/null; then
+                npm run dev &
+                REACT_PID=$!
+                echo -e "${BLUE}React frontend running at http://localhost:3000${NC}"
+            else
+                echo -e "${YELLOW}npm (Node.js) not found. React slide decks will not be available.\nInstall Node.js and run 'npm run dev' in react-slides manually.${NC}"
+            fi
             cd "$ROOT_DIR"
-            echo -e "${GREEN}Starting Streamlit application: $APP_PATH${NC}"
-            streamlit run "$APP_PATH"
-        else
-            # Otherwise run as a Python script
-            cd "$ROOT_DIR"
-            echo -e "${GREEN}Starting Python application: $APP_PATH${NC}"
-            python "$APP_PATH"
         fi
+
+        # Start Streamlit backend
+        if command -v streamlit &> /dev/null; then
+            echo -e "${GREEN}Starting Streamlit application: $APP_PATH${NC}"
+            streamlit run "$APP_PATH" &
+            STREAMLIT_PID=$!
+        else
+            echo -e "${GREEN}Starting Python application: $APP_PATH${NC}"
+            python "$APP_PATH" &
+            STREAMLIT_PID=$!
+        fi
+
+        echo -e "\n${BLUE}To stop the React frontend, run:${NC}"
+        echo -e "${YELLOW}    kill $REACT_PID${NC}"
+        echo -e "${BLUE}To stop the Streamlit backend, run:${NC}"
+        echo -e "${YELLOW}    kill $STREAMLIT_PID${NC}"
+        wait $STREAMLIT_PID
         ;;
     *)
         echo -e "${YELLOW}Invalid choice. Exiting.${NC}"

@@ -12,6 +12,9 @@ import random
 import os
 import sys
 
+from utils.tsx_renderer import render_tsx_component
+from utils.elements_renderer import render_grant_slides
+
 # Add the current directory to the path so we can import the utils module
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -103,24 +106,7 @@ with st.sidebar:
         view_all = st.button("View All Similar Cases")
 
     elif page == "Proposed Grants":
-        st.markdown("### Grant Proposals")
-        grant_type = st.radio("Select Grant Type", ["NIH K99/R00", "NSF CAREER", "McKnight Scholars"])
-
-        # Import the TSX renderer utility
-        from utils.tsx_renderer import render_tsx_component
-
-        # Render the appropriate TSX file based on selection
-        if grant_type == "NIH K99/R00":
-            tsx_path = os.path.join(os.path.dirname(__file__), "grants/k99r00-slide-deck.tsx")
-            render_tsx_component(tsx_path)
-        elif grant_type == "NSF CAREER":
-            tsx_path = os.path.join(os.path.dirname(__file__), "grants/nsf-career-slide-deck.tsx")
-            render_tsx_component(tsx_path)
-        elif grant_type == "McKnight Scholars":
-            tsx_path = os.path.join(os.path.dirname(__file__), "grants/mcknight-scholars-slide-deck.tsx")
-            render_tsx_component(tsx_path)
-
-
+        st.markdown("### Grant Type")
 
 # Function to generate synthetic EEG data
 def generate_eeg_data(channels, seconds, sample_rate=250):
@@ -215,8 +201,6 @@ if page == "EEG Dashboard":
         with col_adv3:
             st.selectbox("Export Format", ["CSV", "JSON", "PDF Report", "DICOM"])
             st.button("Generate Report")
-
-
 
 
     # Main content layout with columns
@@ -504,302 +488,16 @@ if page == "EEG Dashboard":
 
 elif page == "Proposed Grants":
     st.markdown("<div class='main-header'>Grant Proposals</div>", unsafe_allow_html=True)
-
-    if grant_type == "NIH K99/R00":
-        # K99/R00 Grant Content
-        st.markdown("<div class='section-header'>NIH BRAIN Initiative K99/R00 Pathway to Independence Award</div>", unsafe_allow_html=True)
-
-        # Title section with blue styling
-        st.markdown("""
-        <div style="background: linear-gradient(to right, #1a5276, #2980b9); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
-            <h2 style="margin: 0;">NIH BRAIN Initiative K99/R00</h2>
-            <h3 style="margin: 10px 0;">Pathway to Independence Award</h3>
-            <p style="font-style: italic; margin: 0;">A Funding Strategy for NeuroAI Research</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.markdown("### Program Description")
-            st.markdown("• Facilitates transition from postdoctoral research to independent faculty position")
-            st.markdown("• Two phases: mentored (K99) followed by independent research (R00)")
-            st.markdown("• Special emphasis on diversity in NIH BRAIN Initiative version")
-            st.markdown("• Focus on innovative approaches in NeuroAI")
-
-        with col2:
-            st.markdown("### Key Benefits")
-            st.markdown("• Substantial funding: Up to $250,000/year during R00 phase")
-            st.markdown("• Career stability during critical transition period")
-            st.markdown("• Enhanced visibility within neuroscience community")
-            st.markdown("• Protected research time (75% effort commitment)")
-
-        # Add eligibility criteria section from the TSX file
-        st.markdown("### Eligibility & Requirements")
-        col_elig1, col_elig2 = st.columns(2)
-
-        with col_elig1:
-            st.markdown("#### Eligibility Criteria")
-            st.markdown("• Postdoctoral researchers with ≤5 years experience")
-            st.markdown("• Must be in mentored position at application time")
-            st.markdown("• U.S. citizenship not required for standard K99")
-            st.markdown("• U.S. citizenship/permanent residency required for BRAIN diversity K99")
-
-        with col_elig2:
-            st.markdown("#### Application Components")
-            st.markdown("• Research plan integrating K99 and R00 phases")
-            st.markdown("• Career development plan")
-            st.markdown("• Strong mentorship team with expertise in NeuroAI")
-            st.markdown("• Institutional commitment letters")
-
-        st.markdown("### Alignment with NeuroAI Center")
-        st.markdown("""
-        - **Multimodal Data Integration:** Proposed K99/R00 would focus on developing transformer-based architectures for integrating EEG, EHR, and neuroimaging data—directly supporting work on HyperEnsemble learning.
-        - **Explainable AI:** Will incorporate SHAP values and attention mechanisms to make models interpretable for clinicians, addressing a key center priority.
-        - **Clinical Translation:** Focuses on prognostic models for coma recovery, aligning with clinical research priorities.
-        - **Institutional Strength:** MGH's strong NIH funding track record enhances competitiveness for this award.
-        """)
-
-        st.markdown("### Timeline & Strategy")
-        col3, col4 = st.columns(2)
-
-        with col3:
-            st.markdown("#### Key Dates")
-            st.markdown("• Feb 13, 2025: Next standard application deadline")
-            st.markdown("• June 13, 2025: BRAIN Initiative diversity K99/R00 deadline")
-            st.markdown("• 7-9 months: Review timeline from submission to award")
-            st.markdown("• Up to 5 years: Total award duration (K99: 1-2 years; R00: 3 years)")
-
-        with col4:
-            st.markdown("#### Expected Outcomes")
-            st.markdown("• Novel transformer architecture for multimodal neural data")
-            st.markdown("• Clinical validation of prognostic models")
-            st.markdown("• Open-source software and datasets")
-            st.markdown("• 3-4 high-impact publications")
-
-        # Add application strategy from TSX file
-        st.markdown("#### Application Strategy")
-        st.markdown("• Develop proposal in first 3-6 months at NeuroAI Center")
-        st.markdown("• Leverage center's unique datasets and computational resources")
-        st.markdown("• Incorporate mentorship from both Dr. Rosenthal and Dr. Zabihi")
-        st.markdown("• Include preliminary results from initial projects at the center")
-
-    elif grant_type == "NSF CAREER":
-        # NSF CAREER Grant Content
-        st.markdown("<div class='section-header'>NSF CAREER Award: Advancing NeuroAI through Integrated Research and Education</div>", unsafe_allow_html=True)
-
-        # Title section with green styling
-        st.markdown("""
-        <div style="background: linear-gradient(to right, #145a32, #27ae60); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
-            <h2 style="margin: 0;">NSF CAREER Award</h2>
-            <h3 style="margin: 10px 0;">Advancing NeuroAI through Integrated Research and Education</h3>
-            <p style="font-style: italic; margin: 0;">A Five-Year Research and Education Plan</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.markdown("### Award Description")
-            st.markdown("• NSF's most prestigious award for early-career faculty")
-            st.markdown("• Supports those with potential to serve as academic role models")
-            st.markdown("• Integrates research and education activities")
-            st.markdown("• Builds foundation for lifetime of leadership")
-
-        with col2:
-            st.markdown("### Award Details")
-            st.markdown("• 5-year project period")
-            st.markdown("• Minimum award of $400,000 total")
-            st.markdown("• Cognitive Neuroscience program average: $175,000-$225,000 per year")
-            st.markdown("• Annual submission deadline in July")
-
-        st.markdown("### Proposed Research Plan")
-        st.markdown("#### NeuroAI-Based Self-Supervised Learning for Neurological Prognostication")
-        st.markdown("""
-        - **Research Goal:** Develop novel self-supervised learning approaches for neurophysiological data that require minimal labeled examples while maintaining clinical interpretability.
-        - **Approach:** Implement contrastive learning techniques on unlabeled EEG and physiological data, creating foundation models that can be fine-tuned for specific clinical applications.
-        - **Technical Innovation:** Design neurophysiology-specific data augmentation techniques that preserve clinically relevant signal characteristics while creating diverse training examples.
-        - **Clinical Applications:** Apply these techniques to develop prognostic models for neurological recovery with a focus on interpretable predictions that can guide clinical decision-making.
-        - **Broader Impact:** Address the persistent challenge of limited labeled data in clinical neuroscience while making AI systems more accessible to non-AI specialists.
-        """)
-
-        st.markdown("### Alignment with NeuroAI Center")
-        st.markdown("""
-        - **Research Focus:** Self-supervised learning for neurophysiological data directly complements Dr. Zabihi's work on multimodal data integration while extending the center's capabilities to handle limited labeled data scenarios.
-        - **Clinical Translation:** Interpretability focus aligns with Dr. Rosenthal's emphasis on clinically relevant biomarker development and deployment of AI in neurological care.
-        - **Educational Synergy:** NeuroAI Bootcamp can leverage the center's expertise and infrastructure, potentially becoming an annual program that enhances the center's educational mission.
-        - **External Visibility:** NSF CAREER award would enhance the center's national profile in AI education and bring additional resources for educational initiatives.
-        """)
-
-        st.markdown("### Integrated Education Plan")
-        col3, col4 = st.columns(2)
-
-        with col3:
-            st.markdown("#### Educational Goals")
-            st.markdown("Bridge the gap between neuroscience and AI education")
-            st.markdown("Increase diversity in NeuroAI workforce")
-            st.markdown("Develop interdisciplinary curriculum materials")
-            st.markdown("Engage clinicians in AI literacy")
-
-        with col4:
-            st.markdown("#### Key Activities")
-            st.markdown("Develop 'NeuroAI Bootcamp' for underrepresented students")
-            st.markdown("Create open educational resources for clinician AI literacy")
-            st.markdown("Establish mentored research program for first-gen college students")
-            st.markdown("Develop K-12 outreach program with brain-computer interface demos")
-
-        # Add eligibility and requirements from TSX file
-        st.markdown("### Eligibility & Requirements")
-        col_elig1, col_elig2 = st.columns(2)
-
-        with col_elig1:
-            st.markdown("#### Eligibility Criteria")
-            st.markdown("• Tenure-track (or equivalent) Assistant Professor")
-            st.markdown("• Untenured at time of application")
-            st.markdown("• Educational activities must be integrated with research")
-            st.markdown("• Need departmental support letter")
-
-        with col_elig2:
-            st.markdown("#### Proposal Components")
-            st.markdown("• Innovative research plan")
-            st.markdown("• Integrated education plan (not just a list of activities)")
-            st.markdown("• Departmental letter confirming support")
-            st.markdown("• Prior NSF research results (if applicable)")
-
-        st.markdown("### 5-Year Research & Education Roadmap")
-        st.markdown("""
-        <div style="background-color: #e8f8f5; padding: 15px; border-radius: 5px;">
-            <p><strong>Year 1:</strong> Develop foundational self-supervised learning framework; launch pilot NeuroAI Bootcamp</p>
-            <p><strong>Year 2:</strong> Extend framework to multimodal data; create open educational resources</p>
-            <p><strong>Year 3:</strong> Implement clinical validation; expand mentored research program</p>
-            <p><strong>Year 4:</strong> Develop interpretability tools; establish K-12 outreach program</p>
-            <p><strong>Year 5:</strong> Deploy integrated system in clinical environment; assess educational outcomes</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif grant_type == "McKnight Scholars":
-        # McKnight Scholars Grant Content
-        st.markdown("<div class='section-header'>McKnight Scholars Award: Explainable NeuroAI for Neural Circuit Understanding</div>", unsafe_allow_html=True)
-
-        # Title section with purple styling
-        st.markdown("""
-        <div style="background: linear-gradient(to right, #4a235a, #8e44ad); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
-            <h2 style="margin: 0;">McKnight Scholars Award</h2>
-            <h3 style="margin: 10px 0;">Explainable NeuroAI for Neural Circuit Understanding</h3>
-            <p style="font-style: italic; margin: 0;">A Three-Year Research Proposal</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.markdown("### Program Description")
-            st.markdown("• Prestigious award for early-career neuroscientists")
-            st.markdown("• Supports exceptional scientists establishing independent labs")
-            st.markdown("• Emphasis on impactful neuroscience research")
-            st.markdown("• Values diversity, equity, and inclusion in science")
-
-        with col2:
-            st.markdown("### Award Details")
-            st.markdown("• $225,000 total funding over three years ($75,000/year)")
-            st.markdown("• Flexible use of funds (equipment, salary, supplies, etc.)")
-            st.markdown("• No indirect costs allowed")
-            st.markdown("• 10 awardees selected annually")
-
-        st.markdown("### Proposed Research")
-        st.markdown("#### Neural Circuit Decoding through Explainable NeuroAI")
-        st.markdown("""
-        - **Research Goal:** Develop neuroscience-informed AI architectures that reveal underlying neural circuit mechanisms while maintaining clinical interpretability.
-        - **Innovative Approach:** Create circuit-inspired attention mechanisms that mimic known neurological processes, enabling both improved predictions and mechanistic insights into brain function.
-        - **Technical Framework:** Implement dual-path neural networks where one path maximizes predictive performance while the second generates interpretable circuit models that neurologists can validate.
-        - **Clinical Applications:** Focus on neurological recovery mechanisms after acute brain injury, identifying circuit-level biomarkers that predict recovery trajectories.
-        """)
-
-        st.markdown("### Research Specific Aims")
-        st.markdown("""
-        <div style="background-color: #f5eef8; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-            <h4 style="color: #8e44ad; margin-top: 0;">Aim 1: Circuit-Inspired Neural Network Architecture</h4>
-            <ul>
-                <li>Develop attention mechanisms modeled after known neural circuit principles</li>
-                <li>Incorporate hierarchical processing inspired by brain structure</li>
-                <li>Validate architecture on publicly available EEG datasets</li>
-            </ul>
-        </div>
-
-        <div style="background-color: #f5eef8; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-            <h4 style="color: #8e44ad; margin-top: 0;">Aim 2: Mechanistic Interpretability Framework</h4>
-            <ul>
-                <li>Create visualization tools that map model activations to neural circuit components</li>
-                <li>Develop circuit reconstruction algorithms from model weights</li>
-                <li>Test interpretations against existing neurophysiological knowledge</li>
-            </ul>
-        </div>
-
-        <div style="background-color: #f5eef8; padding: 15px; border-radius: 5px;">
-            <h4 style="color: #8e44ad; margin-top: 0;">Aim 3: Clinical Validation and Application</h4>
-            <ul>
-                <li>Apply framework to predict recovery from traumatic brain injury and coma</li>
-                <li>Identify circuit-level biomarkers predictive of outcomes</li>
-                <li>Validate findings through clinical collaboration</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("### Expected Outcomes & Impact")
-        col3, col4 = st.columns(2)
-
-        with col3:
-            st.markdown("#### Scientific Contributions")
-            st.markdown("• Novel circuit-inspired neural network architectures")
-            st.markdown("• Framework for extracting mechanistic insights from AI models")
-            st.markdown("• New understanding of circuit mechanisms in recovery")
-            st.markdown("• 3-5 high-impact publications")
-
-        with col4:
-            st.markdown("#### Broader Impact")
-            st.markdown("• Bridge between AI performance and neuroscientific understanding")
-            st.markdown("• Improved clinical prognostication tools")
-            st.markdown("• Open-source software and educational resources")
-            st.markdown("• Mentorship of diverse trainees in NeuroAI")
-
-        # Add alignment section from TSX file
-        st.markdown("### Strategic Fit with Center's Mission")
-        st.markdown("""
-        - **Research Synergy:** Directly complements Dr. Zabihi's work on EEG signal processing and Dr. Rosenthal's research on physiologic biomarkers for brain monitoring.
-        - **Explainable AI Focus:** Addresses the center's need for interpretable AI models that clinicians can understand and trust, especially in critical care settings.
-        - **Clinical Translation:** Practical applications align with MGH's clinical mission while advancing fundamental neuroscience understanding.
-        - **Collaborative Potential:** Leverages MGH's unique datasets and clinical expertise while bringing novel AI approaches to existing problems.
-        - **DEI Commitment:** Proposal includes specific plans for inclusive lab environment and outreach, matching McKnight Foundation's increased emphasis on diversity.
-        """)
-
-        # Add eligibility and timeline from TSX file
-        st.markdown("### Eligibility & Timeline")
-        col_elig1, col_elig2 = st.columns(2)
-
-        with col_elig1:
-            st.markdown("#### Eligibility Requirements")
-            st.markdown("• Assistant Professors with less than 5 years at that rank")
-            st.markdown("• At non-profit research institutions in U.S.")
-            st.markdown("• Demonstrated commitment to inclusive lab environment")
-            st.markdown("• Cannot be tenured or hold another McKnight award")
-
-        with col_elig2:
-            st.markdown("#### Key Dates (2026 Cycle)")
-            st.markdown("• August 2025: Application period opens")
-            st.markdown("• January 2026: Application deadline")
-            st.markdown("• April 2026: Finalist notifications")
-            st.markdown("• May 2026: Interviews")
-            st.markdown("• July 1, 2026: Funding begins")
-
-        # Add McKnight Scholar Community information
-        st.markdown("### McKnight Scholar Community")
-        st.markdown("The McKnight Scholar award provides not just funding, but access to a prestigious community of neuroscientists that continues throughout one's career:")
-        st.markdown("• **Annual Conference:** McKnight Scholars attend the annual McKnight Conference on Neuroscience for three years after receiving the award, then return every three years.")
-        st.markdown("• **Networking Opportunities:** Connect with leading neuroscientists across career stages and research areas.")
-        st.markdown("• **Collaborative Potential:** Many McKnight Scholars develop collaborations with other awardees, leading to innovative cross-disciplinary research.")
-        st.markdown("• **Career-Long Affiliation:** Being a McKnight Scholar provides a prestigious affiliation that continues throughout one's career.")
-        st.markdown("• **Mentorship:** Senior McKnight Scholars often mentor junior awardees, creating a supportive community.")
-
+    import streamlit.components.v1 as components
+    grant_options = {
+        "NIH K99/R00": "k99r00",
+        "NSF CAREER": "nsf-career",
+        "McKnight Scholars": "mcknight-scholars"
+    }
+    grant_label = st.selectbox("Select Grant Slide Deck", list(grant_options.keys()))
+    grant_route = grant_options[grant_label]
+    react_url = f"http://localhost:3000/{grant_route}"
+    components.iframe(react_url, height=900, width=1100)
 
 elif page == 'Slide Deck (Alignment/Proposed-Contributions)':
     st.markdown("### Slide Deck (Alignment/Proposed-Contributions)")

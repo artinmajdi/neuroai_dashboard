@@ -74,23 +74,23 @@ const McKnightScholarsSlides = () => {
             <div className="bg-purple-50 p-4 rounded-lg">
               <ul className="list-none">
                 <li className="mb-2 flex">
-                  <span className="w-32 font-semibold">August 2025:</span> 
+                  <span className="w-32 font-semibold">August 2025:</span>
                   <span>Application period opens</span>
                 </li>
                 <li className="mb-2 flex">
-                  <span className="w-32 font-semibold">January 2026:</span> 
+                  <span className="w-32 font-semibold">January 2026:</span>
                   <span>Application deadline</span>
                 </li>
                 <li className="mb-2 flex">
-                  <span className="w-32 font-semibold">April 2026:</span> 
+                  <span className="w-32 font-semibold">April 2026:</span>
                   <span>Finalist notifications</span>
                 </li>
                 <li className="mb-2 flex">
-                  <span className="w-32 font-semibold">May 2026:</span> 
+                  <span className="w-32 font-semibold">May 2026:</span>
                   <span>Interviews</span>
                 </li>
                 <li className="flex">
-                  <span className="w-32 font-semibold">July 1, 2026:</span> 
+                  <span className="w-32 font-semibold">July 1, 2026:</span>
                   <span>Funding begins</span>
                 </li>
               </ul>

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+react-slides/node_modules/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Environment
+.env*
+
+# Docker
+*.pid
+*.sock
+
+# OS
+Thumbs.db
+
+# React
+react-slides/.next/
+react-slides/.cache/
+react-slides/build/
+
+# Misc
+*.sqlite3
+*.db
+
+# Ignore local config
+setup_config/local_*.yml
