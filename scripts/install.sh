@@ -360,11 +360,18 @@ if [ -d "$PROJECT_ROOT/react-slides" ]; then
     cd "$PROJECT_ROOT/react-slides"
     if command_exists npm; then
         npm install
-        # Install Tailwind v4 PostCSS plugin for compatibility
-        npm install --save-dev @tailwindcss/postcss
-        # Patch postcss.config.js for Tailwind v4
-        echo "module.exports = {\n  plugins: {\n    '@tailwindcss/postcss': {},\n    autoprefixer: {},\n  },\n};\n" > postcss.config.js
-    else
+            # Install Tailwind v4 PostCSS plugin for compatibility
+            npm install --save-dev @tailwindcss/postcss
+            # Always fix postcss.config.js with proper line breaks (no \n)
+            cat > postcss.config.js << 'EOL'
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+};
+EOL
+            echo "Patched postcss.config.js with valid JS (no \\n)."
         echo -e "${RED}Error: npm (Node.js) is not installed. Please install Node.js and npm to use the React slide decks frontend.\nVisit https://nodejs.org/en/download for installation instructions.${NC}"
     fi
     cd "$PROJECT_ROOT"
